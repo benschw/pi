@@ -6,5 +6,5 @@
 
 
 
-	curl -X POST http://192.168.0.115/toggle
-	curl -X POST http://192.168.0.115/count-down
+	curl -X POST http://192.168.0.115/blink/toggle
+	curl -X POST http://192.168.0.115/blink/count-down

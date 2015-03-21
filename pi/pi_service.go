@@ -1,9 +1,8 @@
 package pi
 
 import (
+	"github.com/benschw/opin-go/ophttp"
 	"github.com/gorilla/mux"
-	"github.com/kidoman/embd"
-	_ "github.com/kidoman/embd/host/rpi"
 	"log"
 	"net/http"
 )
@@ -15,36 +14,28 @@ type PiService struct {
 }
 
 func (s *PiService) Run() error {
+	defer log.Println("Exiting")
 
-	if err := embd.InitLED(); err != nil {
-		return err
-	}
-	defer embd.CloseLED()
-
-	led, err := embd.NewLED(0)
+	bCtrl, err := NewBlinkCtrl()
 	if err != nil {
 		return err
 	}
-	defer func() {
-		led.Off()
-		led.Close()
-	}()
-
-	// quit := make(chan os.Signal, 1)
-	// signal.Notify(quit, os.Interrupt, os.Kill)
-	// defer signal.Stop(quit)
+	defer bCtrl.Close()
 
 	// route handlers
-	blink := &BlinkResource{Led: led}
+	admin := &AdminResource{}
+	blink := &BlinkResource{Ctrl: bCtrl}
 
 	// Configure Routes
 	r := mux.NewRouter()
 
-	r.HandleFunc("/toggle", blink.Toggle).Methods("POST")
-	r.HandleFunc("/count-down", blink.CountDown).Methods("POST")
+	r.HandleFunc("/admin/status", admin.Status).Methods("GET")
+
+	r.HandleFunc("/blink/toggle", blink.Toggle).Methods("POST")
+	r.HandleFunc("/blink/count-down", blink.CountDown).Methods("POST")
 
 	http.Handle("/", r)
 
 	// Start HTTP Server
-	return http.ListenAndServe(s.Bind, nil)
+	return ophttp.StartServer(s.Bind)
 }
