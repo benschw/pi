@@ -22,7 +22,6 @@ clean:
 	rm -rf golang-crosscompile
 
 build: 
-	mkdir -p build
 	source golang-crosscompile/crosscompile.bash; \
 	go-linux-arm build -o stepper-demo
 
