@@ -72,10 +72,6 @@ func main() {
 	stepDir := 2 // Set to 1 or 2 for clockwise, -1 or -2 for counter-clockwise
 
 	// Start main loop
-	quit := make(chan os.Signal, 1)
-	signal.Notify(quit, os.Interrupt, os.Kill)
-	defer signal.Stop(quit)
-
 	ticker := time.NewTicker(time.Duration(*stepDelay) * time.Millisecond)
 
 	var stepCounter int
@@ -106,7 +102,11 @@ func main() {
 		}
 	}()
 
-	<-quit
-	ticker.Stop()
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, os.Interrupt, os.Kill)
+	defer signal.Stop(quit)
 
+	<-quit
+
+	ticker.Stop()
 }
