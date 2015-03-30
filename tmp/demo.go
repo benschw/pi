@@ -56,8 +56,7 @@ func main() {
 		stepPins[i] = pin
 	}
 
-	// Define advanced sequence
-	// as shown in manufacturers datasheet
+	// Define sequence described in manufacturer's datasheet
 	seq := [][]int{
 		[]int{1, 0, 0, 0},
 		[]int{1, 1, 0, 0},
