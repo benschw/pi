@@ -80,22 +80,8 @@ func (s *Stepper) Close() {
 	embd.CloseGPIO()
 }
 
-func (s *Stepper) Step(direction int) error {
-	// s.Position incremented by 1 or 2 for clockwise, -1 or -2 for counter-clockwise
+func (s *Stepper) Step() error {
 
-	// set position
-	switch direction {
-	case CW:
-		s.Position++
-		if s.Position >= len(s.Sequence) {
-			s.Position = 0
-		}
-	case CCW:
-		s.Position--
-		if s.Position < 0 {
-			s.Position = len(s.Sequence)
-		}
-	}
 	log.Printf("Position: %d\n", s.Position)
 
 	// set position
@@ -111,6 +97,12 @@ func (s *Stepper) Step(direction int) error {
 			}
 
 		}
+	}
+
+	// s.Position incremented by 1 or 2 for clockwise, -1 or -2 for counter-clockwise
+	s.Position++
+	if s.Position >= len(s.Sequence) {
+		s.Position = 0
 	}
 
 	return nil

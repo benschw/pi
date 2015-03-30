@@ -36,7 +36,7 @@ func main() {
 		select {
 		case <-time.After(time.Duration(*stepWait) * time.Millisecond):
 
-			st.Step(stepper.CW)
+			st.Step()
 
 		case <-quit:
 			return
