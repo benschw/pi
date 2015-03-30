@@ -1,5 +1,6 @@
 golang-crosscompile
 stepper_demo/golang-crosscompile
+tmp/golang-crosscompile
 stepper_demo/stepper-demo
 build
 piled
