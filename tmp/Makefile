@@ -23,7 +23,7 @@ clean:
 
 build: 
 	source golang-crosscompile/crosscompile.bash; \
-	go-linux-arm build -o stepper-demo
+	go-linux-arm build -o demo
 
 golang-buildsetup: golang-crosscompile
 	source golang-crosscompile/crosscompile.bash; \
@@ -35,6 +35,6 @@ golang-crosscompile:
 
 
 push:
-	scp stepper-demo pi@192.168.0.116:/home/pi/
+	scp demo pi@192.168.0.116:/home/pi/
 
 .PHONY: build
