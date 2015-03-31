@@ -22,7 +22,7 @@ func main() {
 	log.SetFlags(0)
 	log.SetOutput(os.Stderr)
 
-	stepWait := flag.Int("step-delay", 10, "milliseconds between steps")
+	stepDelay := flag.Int("step-delay", 10, "milliseconds between steps")
 	steps := flag.Int("steps", 0, "number of steps, 0 for infinite")
 	flag.Parse()
 
